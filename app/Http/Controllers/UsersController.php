@@ -104,6 +104,8 @@ class UsersController extends Controller
                     $answer['msg'] = $e -> getMessage();
                     $answer['status'] = 0;
                 }
+            }else{
+                $answer['msg'] = 'Contraseña incorrecta';
             }
         }else{
             $answer['error'] = 'No existen usuarios con ese nombre';
@@ -275,17 +277,16 @@ class UsersController extends Controller
         
         $answer = ['status' => 1, 'msg' => ''];
 
-        $user = $req->user; // Token del usuario que va a realizar el registro, DEBE ser un Administrador
         $card = $req -> getContent(); // Datos de la carta a modificar
         $card = json_decode($card);
 
         // Recibo el nombre de una carta y una collection que ya existen
-        $cardName = $req->input('name');
-        $collectionName = $req->input('nameCollection');
+        $idCard = $req->input('idCarta');
+        $idCollection = $req->input('idCollection');
         
         // Busco esa carta en la tabla de cartas
-        $cardToAdd = DB::table('cards')->where('name', $cardName)->first();
-        $collection = DB::table('collections')->where('name', $collectionName)->first();
+        $cardToAdd = DB::table('cards')->where('id', $idCard)->first();
+        $collection = DB::table('collections')->where('id', $idCollection)->first();
         
         // Busco el id de la carta que quiero añadir para luego comprobar que no esté ya añadida a esa colección
         $cardId = $cardToAdd->id;
