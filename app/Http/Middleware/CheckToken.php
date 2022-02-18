@@ -24,7 +24,6 @@ class CheckToken
             // Compruebo que existe el usuario
             $apiToken = $request->input('api_token');
             $user = User::where('api_token', $apiToken)->first();
-
             // Si el user no existe notificamos un error
             if(!$user){
                 $answer['msg'] = "El user no existe";

@@ -158,8 +158,6 @@ class UsersController extends Controller
         
         $answer = ['status' => 1, 'msg' => ''];
 
-        $user = $req->user; // Token del usuario que va a realizar el registro, DEBE ser un Administrador
-        
         // Coger el contenido del postman en formato json
         $dataCard = $req -> getContent();
         $dataCard = json_decode($dataCard);
@@ -393,10 +391,15 @@ class UsersController extends Controller
             ->get();
             
         try{
-            if($searchResults){
+            if($search){
+                if($searchResults){
                 $answer['msg'] = "Estos son tus resultados:";
                 $answer['data'] = $searchResults;
+                }
+            }else{
+                $answer['msg'] = "Input name vacio";
             }
+            
             
         }catch(\Exception $e){
             $answer['msg'] = $e -> getMessage();
